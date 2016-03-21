@@ -1,0 +1,10 @@
+Should accept a single frame, and then allow the user to select a padding
+and frames-per-row, as in Anura.
+
+INPUT:	xywh (selection/autodetected?)
+		frames
+		frames_per_row
+		max_width (when to start wrapping; defaults to the image width)
+		layors to apply to (default to all visible)
+OUTPUT:	<Everything is outputted to the image>
+

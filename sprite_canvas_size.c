@@ -1,3 +1,6 @@
+// The original version of this code comes from the GIMP developer resource
+// wiki. (http://developer.gimp.org/writing-a-plug-in/3/myblur5.c)
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -78,20 +81,20 @@ query (void)
   };
 
   gimp_install_procedure (
-    "plug-in-myblur5",
-    "My blur 5 (preview)",
-    "Blurs the image",
-    "David Neary",
-    "Copyright David Neary",
-    "2004",
-    "_My blur 5 (preview)...",
+    "plug-in-spriteCanvasSize",
+    "Change sprite canvas size",
+    "Resizes sprites in sprite sheets",
+    "Autofire",
+    "Copyright under GNU GENERAL PUBLIC LICENSE",
+    "2016",
+    "_Change sprite canvas size...",
     "RGB*",
     GIMP_PLUGIN,
     G_N_ELEMENTS (args), 0,
     args, NULL);
 
-  gimp_plugin_menu_register ("plug-in-myblur5",
-                             "<Image>/Filters/Blur");
+  gimp_plugin_menu_register ("plug-in-spriteCanvasSize",
+                             "<Image>/Filters/Animation");
 }
 
 static void
@@ -124,7 +127,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /* Get options last values if needed */
-      gimp_get_data ("plug-in-myblur", &bvals);
+      gimp_get_data ("plug-in-spriteCanvasSize", &bvals);
 
       /* Display the dialog */
       if (! blur_dialog (drawable))
@@ -140,7 +143,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Get options last values if needed  */
-      gimp_get_data ("plug-in-myblur", &bvals);
+      gimp_get_data ("plug-in-spriteCanvasSize", &bvals);
       break;
 
     default:
@@ -154,7 +157,7 @@ run (const gchar      *name,
 
   /*  Finally, set options in the core  */
   if (run_mode == GIMP_RUN_INTERACTIVE)
-    gimp_set_data ("plug-in-myblur", &bvals, sizeof (MyBlurVals));
+    gimp_set_data ("plug-in-spriteCanvasSize", &bvals, sizeof (MyBlurVals));
 
   return;
 }
@@ -171,7 +174,7 @@ blur (GimpDrawable *drawable,
   gint         width, height;
 
   if (! preview)
-    gimp_progress_init ("My Blur...");
+    gimp_progress_init ("Resizing sprite canvases...");
 
   /* Gets upper left and lower right coordinates,
    * and layers number in the image */
@@ -360,11 +363,11 @@ blur_dialog (GimpDrawable *drawable)
   GtkWidget *frame_label;
   gboolean   run;
 
-  gimp_ui_init ("myblur", FALSE);
+  gimp_ui_init ("spriteCanvasSize", FALSE);
 
-  dialog = gimp_dialog_new ("My blur", "myblur",
+  dialog = gimp_dialog_new ("Resize sprite canvas size", "spriteCanvasSize",
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-myblur",
+                            gimp_standard_help_func, "plug-in-spriteCanvasSize",
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
